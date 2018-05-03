@@ -3,4 +3,10 @@
     <string name="title_toggle">Toggle</string>
     <string name="title_messages">Messages</string>
     <string name="title_configuration">Configuration</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="sender_name_with_address">%1$s(%2$s)</string>
 </resources>
