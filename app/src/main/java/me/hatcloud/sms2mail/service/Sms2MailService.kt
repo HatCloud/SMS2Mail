@@ -17,7 +17,7 @@ import me.hatcloud.sms2mail.utils.ACTION
 import me.hatcloud.sms2mail.utils.NOTIFICATION_ID
 
 
-class SMS2MailService : Service() {
+class Sms2MailService : Service() {
 
     private val thread = MyThread()
 

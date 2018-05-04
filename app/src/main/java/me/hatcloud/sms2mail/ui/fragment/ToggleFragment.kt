@@ -9,13 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_toggle.*
 import me.hatcloud.sms2mail.R
-import me.hatcloud.sms2mail.service.SMS2MailService
+import me.hatcloud.sms2mail.service.Sms2MailService
 import me.hatcloud.sms2mail.utils.ACTION
-import me.hatcloud.sms2mail.utils.isSMS2MailServiceRun
+import me.hatcloud.sms2mail.utils.isSms2MailServiceRun
 
 
 /**
- * A simple [Fragment] subclass.
+ * A simple [Fragment] subclass for toggle sms to mail service.
  * Use the [ToggleFragment.newInstance] factory method to
  * create an instance of this fragment.
  *
@@ -31,8 +31,8 @@ class ToggleFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         updateUI()
         btnToggle.setOnClickListener {
-            if (isSMS2MailServiceRun(activity)) {
-                val stopIntent = Intent(activity, SMS2MailService::class.java)
+            if (isSms2MailServiceRun(activity)) {
+                val stopIntent = Intent(activity, Sms2MailService::class.java)
                 stopIntent.action = ACTION.STOP_SMS_2_MAIL_SERVICE_ACTION
                 activity?.let {
                     it.startService(stopIntent)
@@ -40,9 +40,9 @@ class ToggleFragment : Fragment() {
                 }
 
             } else {
-                val startIntent = Intent(activity, SMS2MailService::class.java)
+                val startIntent = Intent(activity, Sms2MailService::class.java)
                 startIntent.action = ACTION.START_SMS_2_MAIL_SERVICE_ACTION
-                activity?.let{
+                activity?.let {
                     it.startService(startIntent)
                     updateUI(true)
                 }
@@ -51,7 +51,7 @@ class ToggleFragment : Fragment() {
     }
 
     private fun updateUI() {
-        updateUI(isSMS2MailServiceRun(activity))
+        updateUI(isSms2MailServiceRun(activity))
     }
 
     private fun updateUI(isSMS2MailServiceRun: Boolean) {

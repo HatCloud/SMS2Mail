@@ -1,6 +1,6 @@
 package me.hatcloud.sms2mail.data
 
-data class SMS(val _id: Long,               // 短信序号，如 100
+data class Sms(val _id: Long,               // 短信序号，如 100
                val address: String,         // 发件人地址，即手机号，如 + 86138138000
                val person: String?,         // 发件人，如果发件人在通讯录中则为具体姓名，陌生人为 null
                val body: String,            // 短信具体内容
@@ -13,18 +13,18 @@ data class SMS(val _id: Long,               // 短信序号，如 100
 
 }
 
-enum class SMSType(val value: Int) {
+enum class SmsType(val value: Int) {
     RECEIVED(1), SENT(2)
 }
 
-enum class SMSStatus(val value: Int) {
+enum class SmsStatus(val value: Int) {
     RECEIVED(-1), COMPLETE(0), PENDING(64), FAILED(128)
 }
 
-enum class SMSProtocol(val value: Int) {
+enum class SmsProtocol(val value: Int) {
     SMS_PROTO(0), MMS_PROTO(1)
 }
 
-enum class SMSReadStatus(val value: Int){
+enum class SmsReadStatus(val value: Int){
     UNREAD(0), MARK_READ(1)
 }

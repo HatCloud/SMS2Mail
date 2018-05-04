@@ -8,23 +8,23 @@ import android.net.Uri
 import android.support.v4.app.ActivityCompat.requestPermissions
 import android.support.v4.app.ActivityCompat.shouldShowRequestPermissionRationale
 import android.support.v4.content.PermissionChecker.checkSelfPermission
-import me.hatcloud.sms2mail.data.SMS
-import me.hatcloud.sms2mail.service.SMS2MailService
+import me.hatcloud.sms2mail.data.Sms
+import me.hatcloud.sms2mail.service.Sms2MailService
 
 
 private const val REQUEST_CODE_ASK_PERMISSIONS = 124
 
 
-fun getSmsFromPhone(activity: Activity): List<SMS> {
+fun getSmsFromPhone(activity: Activity): List<Sms> {
 
     val cr = activity.contentResolver ?: return ArrayList()
     val projection = arrayOf("_id", "address", "person", "body", "date", "thread_id", "read"
             , "protocol", "status", "type")
     val SMS_INBOX = Uri.parse("content://sms/")
     val cur = cr.query(SMS_INBOX, projection, null, null, "date desc") ?: return ArrayList()
-    val smsList = ArrayList<SMS>()
+    val smsList = ArrayList<Sms>()
     while (cur.moveToNext()) {
-        SMS(cur.getLong(cur.getColumnIndex("_id")),
+        Sms(cur.getLong(cur.getColumnIndex("_id")),
                 cur.getString(cur.getColumnIndex("address")),   // 手机号
                 cur.getString(cur.getColumnIndex("person")),    // 联系人姓名列表
                 cur.getString(cur.getColumnIndex("body")),      // 短信正文
@@ -60,7 +60,7 @@ fun addPermission(activity: Activity, permissionsList: MutableList<String>, perm
     return true
 }
 
-fun isSMS2MailServiceRun(context: Context?): Boolean {
+fun isSms2MailServiceRun(context: Context?): Boolean {
     if (context == null) {
         return false
     }
@@ -75,7 +75,7 @@ fun isSMS2MailServiceRun(context: Context?): Boolean {
     }
 
     for (i in serviceList.indices) {
-        if (serviceList[i].service.className == SMS2MailService::class.java.name) {
+        if (serviceList[i].service.className == Sms2MailService::class.java.name) {
             isRunning = true
             break
         }

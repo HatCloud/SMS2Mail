@@ -9,12 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import me.hatcloud.sms2mail.R
-import me.hatcloud.sms2mail.data.SMS
+import me.hatcloud.sms2mail.data.Sms
 import me.hatcloud.sms2mail.ui.adapter.CommonListAdapter
 import me.hatcloud.sms2mail.ui.viewholder.ViewHolderManager
 import me.hatcloud.sms2mail.utils.getSmsFromPhone
 
-class SMSFragment : Fragment() {
+class SmsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -23,7 +23,7 @@ class SMSFragment : Fragment() {
         if (view is RecyclerView) {
             with(view) {
                 layoutManager = LinearLayoutManager(context)
-                adapter = CommonListAdapter<SMS>(ViewHolderManager.ViewHolderType.SMS).apply {
+                adapter = CommonListAdapter<Sms>(ViewHolderManager.ViewHolderType.SMS).apply {
                     activity?.let {
                         initData(getSmsFromPhone(it))
                     }
@@ -36,6 +36,6 @@ class SMSFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() = SMSFragment()
+        fun newInstance() = SmsFragment()
     }
 }

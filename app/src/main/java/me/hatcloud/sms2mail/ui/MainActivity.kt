@@ -4,10 +4,9 @@ import android.Manifest
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
 import me.hatcloud.sms2mail.R
 import me.hatcloud.sms2mail.ui.fragment.ConfigurationFragment
-import me.hatcloud.sms2mail.ui.fragment.SMSFragment
+import me.hatcloud.sms2mail.ui.fragment.SmsFragment
 import me.hatcloud.sms2mail.ui.fragment.ToggleFragment
 import me.hatcloud.sms2mail.utils.checkPermission
 import me.hatcloud.sms2mail.utils.requestPermission
@@ -32,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         false
     }
 
-    private val fragments = listOf(ToggleFragment.newInstance(), SMSFragment.newInstance(), ConfigurationFragment.newInstance())
+    private val fragments = listOf(ToggleFragment.newInstance(), SmsFragment.newInstance(), ConfigurationFragment.newInstance())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
