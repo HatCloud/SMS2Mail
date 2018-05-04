@@ -1,6 +1,7 @@
 package me.hatcloud.sms2mail.utils
 
 import android.net.Uri
+import me.hatcloud.sms2mail.data.Sms
 
 val SMS_INBOX_URI = Uri.parse("content://sms/inbox")!!
 val SMS_PROJECTION = arrayOf("_id", "address", "person", "body", "date", "thread_id", "read"
@@ -18,4 +19,8 @@ interface NOTIFICATION_ID {
     companion object {
         const val SMS_2_MAIL = 10106
     }
+}
+
+interface SmsListener {
+    fun onSmsReceived(sms: Sms)
 }

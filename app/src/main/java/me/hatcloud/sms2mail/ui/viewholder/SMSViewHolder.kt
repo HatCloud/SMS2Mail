@@ -1,6 +1,7 @@
 package me.hatcloud.sms2mail.ui.viewholder
 
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.list_item_sms.view.*
 import me.hatcloud.sms2mail.R
 import me.hatcloud.sms2mail.data.Sms
 import me.hatcloud.sms2mail.utils.formatDate

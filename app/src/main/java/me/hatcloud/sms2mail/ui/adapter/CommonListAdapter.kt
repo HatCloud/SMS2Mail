@@ -87,6 +87,11 @@ class CommonListAdapter<T : Any>(val viewHolderType: ViewHolderManager.ViewHolde
         notifyItemRangeInserted(this.data.size, 1)
     }
 
+    fun addData(data: T, index: Int) {
+        this.data.add(index, data)
+        notifyItemRangeInserted(index, 1)
+    }
+
     override fun removeItem(position: Int) {
         if (position < 0 || position >= itemCount) {
             return

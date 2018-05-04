@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.ActivityManager
 import android.content.Context
 import android.content.pm.PackageManager
+import android.database.Cursor
 import android.support.v4.app.ActivityCompat.requestPermissions
 import android.support.v4.app.ActivityCompat.shouldShowRequestPermissionRationale
 import android.support.v4.content.PermissionChecker.checkSelfPermission
@@ -14,17 +15,19 @@ import me.hatcloud.sms2mail.data.Sms
 private const val REQUEST_CODE_ASK_PERMISSIONS = 124
 
 
-fun getAllSmsFromPhone(activity: Activity): List<Sms> {
-    val cr = activity.contentResolver ?: return ArrayList()
-
-    val cur = cr.query(SMS_INBOX_URI, SMS_PROJECTION
-            , null, null, "date desc") ?: return ArrayList()
+fun getAllSmsFromPhone(context: Context): List<Sms> {
+    val cur = getSmsContentObserverCursor(context) ?: return ArrayList()
     val smsList = ArrayList<Sms>()
     while (cur.moveToNext()) {
         Sms(cur).let { smsList.add(it) }
     }
     cur.close()
     return smsList
+}
+
+fun getSmsContentObserverCursor(context: Context): Cursor? {
+    return context.contentResolver?.query(SMS_INBOX_URI, SMS_PROJECTION, null, null
+            , "date desc")
 }
 
 fun checkPermission(activity: Activity, permission: String): Boolean =

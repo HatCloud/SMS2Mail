@@ -10,23 +10,24 @@ import android.graphics.Color
 import android.os.Build
 import android.os.IBinder
 import android.support.v4.app.NotificationCompat
+import android.util.Log
 import me.hatcloud.sms2mail.R
+import me.hatcloud.sms2mail.data.Sms
 import me.hatcloud.sms2mail.ui.MainActivity
 import me.hatcloud.sms2mail.utils.ACTION
 import me.hatcloud.sms2mail.utils.NOTIFICATION_ID
+import me.hatcloud.sms2mail.utils.SmsListener
 
 
-class Sms2MailService : Service() {
-
-    private val thread = MyThread()
+class Sms2MailService : Service(), SmsListener{
 
     init {
-        thread.start()
+        SmsListenerMgr.register(this)
     }
 
     override fun onDestroy() {
+        SmsListenerMgr.unregister(this)
         super.onDestroy()
-        thread.stopSelf()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -67,6 +68,10 @@ class Sms2MailService : Service() {
 
     override fun onBind(intent: Intent): IBinder? = null
 
+    override fun onSmsReceived(sms: Sms) {
+        Log.d("hat_cloud", sms.body)
+    }
+
     @TargetApi(26)
     private fun createChannel(notificationManager: NotificationManager): NotificationChannel {
         val name = getString(R.string.notification_title)
@@ -79,29 +84,5 @@ class Sms2MailService : Service() {
         channel.lightColor = Color.BLUE
         notificationManager.createNotificationChannel(channel)
         return channel
-    }
-}
-
-class MyThread : Thread() {
-
-    var stopFlag: Boolean = false
-
-    override fun run() {
-        while (!stopFlag) {
-            try {
-                Thread.sleep(2000)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-    }
-
-    override fun start() {
-        super.start()
-        stopFlag = false
-    }
-
-    fun stopSelf() {
-        stopFlag = true
     }
 }
