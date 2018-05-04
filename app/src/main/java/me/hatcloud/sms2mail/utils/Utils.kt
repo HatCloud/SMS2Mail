@@ -9,7 +9,7 @@ import android.support.v4.app.ActivityCompat.requestPermissions
 import android.support.v4.app.ActivityCompat.shouldShowRequestPermissionRationale
 import android.support.v4.content.PermissionChecker.checkSelfPermission
 import me.hatcloud.sms2mail.data.Sms
-import me.hatcloud.sms2mail.service.Sms2MailService
+import me.hatcloud.sms2mail.core.Sms2MailService
 
 
 private const val REQUEST_CODE_ASK_PERMISSIONS = 124

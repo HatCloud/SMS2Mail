@@ -24,7 +24,7 @@
         </activity>
 
         <service
-            android:name=".service.Sms2MailService"
+            android:name=".core.Sms2MailService"
             android:enabled="true"
             android:exported="false" />
     </application>

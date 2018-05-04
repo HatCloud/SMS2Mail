@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_toggle.*
 import me.hatcloud.sms2mail.R
-import me.hatcloud.sms2mail.service.Sms2MailService
+import me.hatcloud.sms2mail.core.Sms2MailService
 import me.hatcloud.sms2mail.utils.ACTION
 import me.hatcloud.sms2mail.utils.isSms2MailServiceRun
 

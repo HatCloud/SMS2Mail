@@ -1,4 +1,4 @@
-package me.hatcloud.sms2mail.service
+package me.hatcloud.sms2mail.core
 
 import android.annotation.TargetApi
 import android.app.NotificationChannel
@@ -10,7 +10,6 @@ import android.graphics.Color
 import android.os.Build
 import android.os.IBinder
 import android.support.v4.app.NotificationCompat
-import android.util.Log
 import me.hatcloud.sms2mail.R
 import me.hatcloud.sms2mail.ui.MainActivity
 import me.hatcloud.sms2mail.utils.ACTION
