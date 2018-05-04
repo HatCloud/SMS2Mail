@@ -1,12 +1,15 @@
 package me.hatcloud.sms2mail.utils
 
 import android.app.Activity
+import android.app.ActivityManager
+import android.content.Context
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.support.v4.app.ActivityCompat.requestPermissions
 import android.support.v4.app.ActivityCompat.shouldShowRequestPermissionRationale
 import android.support.v4.content.PermissionChecker.checkSelfPermission
 import me.hatcloud.sms2mail.data.SMS
+import me.hatcloud.sms2mail.service.SMS2MailService
 
 
 private const val REQUEST_CODE_ASK_PERMISSIONS = 124
@@ -55,4 +58,27 @@ fun addPermission(activity: Activity, permissionsList: MutableList<String>, perm
             return false
     }
     return true
+}
+
+fun isSMS2MailServiceRun(context: Context?): Boolean {
+    if (context == null) {
+        return false
+    }
+    var isRunning = false
+    val activityManager = context
+            .getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+    val serviceList = activityManager
+            .getRunningServices(30)
+
+    if (serviceList.size <= 0) {
+        return false
+    }
+
+    for (i in serviceList.indices) {
+        if (serviceList[i].service.className == SMS2MailService::class.java.name) {
+            isRunning = true
+            break
+        }
+    }
+    return isRunning
 }
