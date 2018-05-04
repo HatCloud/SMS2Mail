@@ -12,7 +12,7 @@ import me.hatcloud.sms2mail.R
 import me.hatcloud.sms2mail.data.Sms
 import me.hatcloud.sms2mail.ui.adapter.CommonListAdapter
 import me.hatcloud.sms2mail.ui.viewholder.ViewHolderManager
-import me.hatcloud.sms2mail.utils.getSmsFromPhone
+import me.hatcloud.sms2mail.utils.getAllSmsFromPhone
 
 class SmsFragment : Fragment() {
 
@@ -25,7 +25,7 @@ class SmsFragment : Fragment() {
                 layoutManager = LinearLayoutManager(context)
                 adapter = CommonListAdapter<Sms>(ViewHolderManager.ViewHolderType.SMS).apply {
                     activity?.let {
-                        initData(getSmsFromPhone(it))
+                        initData(getAllSmsFromPhone(it))
                     }
                 }
                 addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))

@@ -4,39 +4,24 @@ import android.app.Activity
 import android.app.ActivityManager
 import android.content.Context
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.support.v4.app.ActivityCompat.requestPermissions
 import android.support.v4.app.ActivityCompat.shouldShowRequestPermissionRationale
 import android.support.v4.content.PermissionChecker.checkSelfPermission
-import me.hatcloud.sms2mail.data.Sms
 import me.hatcloud.sms2mail.core.Sms2MailService
+import me.hatcloud.sms2mail.data.Sms
 
 
 private const val REQUEST_CODE_ASK_PERMISSIONS = 124
 
 
-fun getSmsFromPhone(activity: Activity): List<Sms> {
-
+fun getAllSmsFromPhone(activity: Activity): List<Sms> {
     val cr = activity.contentResolver ?: return ArrayList()
-    val projection = arrayOf("_id", "address", "person", "body", "date", "thread_id", "read"
-            , "protocol", "status", "type")
-    val SMS_INBOX = Uri.parse("content://sms/")
-    val cur = cr.query(SMS_INBOX, projection, null, null, "date desc") ?: return ArrayList()
+
+    val cur = cr.query(SMS_INBOX_URI, SMS_PROJECTION
+            , null, null, "date desc") ?: return ArrayList()
     val smsList = ArrayList<Sms>()
     while (cur.moveToNext()) {
-        Sms(cur.getLong(cur.getColumnIndex("_id")),
-                cur.getString(cur.getColumnIndex("address")),   // 手机号
-                cur.getString(cur.getColumnIndex("person")),    // 联系人姓名列表
-                cur.getString(cur.getColumnIndex("body")),      // 短信正文
-                cur.getLong(cur.getColumnIndex("date")),        // 日期事件戳
-                cur.getLong(cur.getColumnIndex("thread_id")),   // 对话的序号，如 100，与同一个手机号互发的短信，其序号是相同的
-                cur.getInt(cur.getColumnIndex("read")),         // 是否阅读 0 未读，1 已读
-                cur.getInt(cur.getColumnIndex("protocol")),     // 协议 0 SMS_PROTO 短信，1 MMS_PROTO 彩信
-                cur.getInt(cur.getColumnIndex("status")),       // 短信状态 - 1 接收，0complete,64pending,128failed
-                cur.getInt(cur.getColumnIndex("type")))         // 短信类型 1 是接收到的，2 是已发出
-                .let {
-                    smsList.add(it)
-                }
+        Sms(cur).let { smsList.add(it) }
     }
     cur.close()
     return smsList

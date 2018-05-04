@@ -1,5 +1,11 @@
 package me.hatcloud.sms2mail.utils
 
+import android.net.Uri
+
+val SMS_INBOX_URI = Uri.parse("content://sms/inbox")!!
+val SMS_PROJECTION = arrayOf("_id", "address", "person", "body", "date", "thread_id", "read"
+        , "protocol", "status", "type")
+
 interface ACTION {
     companion object {
         const val MAIN_ACTION = "me.hatcloud.sms2mail.action.main"
