@@ -21,7 +21,7 @@ class SmsFragment : Fragment(), SmsListener {
     private val smsAdapter by lazy {
         CommonListAdapter<Sms>(ViewHolderManager.ViewHolderType.SMS).apply {
             activity?.let {
-                initData(getAllSmsFromPhone(it))
+                initData(getAllSmsFromPhone())
             }
         }
     }

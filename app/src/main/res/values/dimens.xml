@@ -4,8 +4,12 @@
     <dimen name="small_padding">8dp</dimen>
     <dimen name="tiny_padding">4dp</dimen>
 
-    <dimen name="big_text">18sp</dimen>
+    <dimen name="super_text">18sp</dimen>
+    <dimen name="big_text">16sp</dimen>
     <dimen name="normal_text">14sp</dimen>
     <dimen name="small_text">12sp</dimen>
     <dimen name="tiny_text">10sp</dimen>
+
+    <dimen name="normal_height">40dp</dimen>
+    <dimen name="small_height">32dp</dimen>
 </resources>
