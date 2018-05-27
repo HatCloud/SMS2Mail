@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         }
         val fragmentTransaction = supportFragmentManager.beginTransaction()
 
-        fragments.forEachIndexed({index, fragment ->
+        fragments.forEachIndexed({ index, fragment ->
             if (index != position) {
                 if (fragment.isAdded) {
                     fragmentTransaction.hide(fragment)

@@ -38,7 +38,6 @@ class ConfigurationFragment : Fragment() {
             btnEditAndApply.setText(if (value) R.string.apply else R.string.edit)
             if (!value) {
                 ConfigurationUtil.configuration = Configuration(inputEmail.text.toString(),
-                        inputPassword.text.toString(),
                         inputSmtpServerHost.text.toString(),
                         inputSmtpServerPort.text.toString(),
                         when (radioSecurity.checkedRadioButtonId) {
@@ -48,6 +47,9 @@ class ConfigurationFragment : Fragment() {
                             else -> SecurityType.NONE
                         },
                         inputEmailToForward.text.toString())
+                        .apply {
+                            password = inputPassword.text.toString()
+                        }
             }
             field = value
         }
