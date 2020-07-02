@@ -17,7 +17,7 @@ import me.hatcloud.sms2mail.ui.MainActivity
 import me.hatcloud.sms2mail.utils.*
 
 
-class Sms2MailService : Service(), SmsListener {
+class Sms2MailService : Service(), SmsListener{
 
     init {
         SmsListenerMgr.register(this)
@@ -37,10 +37,10 @@ class Sms2MailService : Service(), SmsListener {
                 val pendingIntent = PendingIntent.getActivity(this, 0,
                         notificationIntent, 0)
 
-                val channelId: String by lazy {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        createChannel(getSystemService(NOTIFICATION_SERVICE) as NotificationManager).id
-                    } else ""
+                val channelId: String = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    createChannel(getSystemService(NOTIFICATION_SERVICE) as NotificationManager).id
+                } else {
+                    TODO("VERSION.SDK_INT < O")
                 }
 
                 val notification = NotificationCompat.Builder(this, channelId)
@@ -67,18 +67,16 @@ class Sms2MailService : Service(), SmsListener {
     override fun onBind(intent: Intent): IBinder? = null
 
     override fun onSmsReceived(sms: Sms) {
-        val configuration = ConfigurationUtil.configuration
-        if (configuration != null) {
-            val thread = object : Thread() {
-                override fun run() {
-                    sendMail(MailInfo(sms, configuration))
-                }
+        val thread = object : Thread(){
+            override fun run() {
+                sendMail(MailInfo(sms))
+                LogUtil.print("call send mail")
             }
-            thread.start()
         }
+        thread.start()
     }
 
-    @TargetApi(26)
+    @TargetApi(27)
     private fun createChannel(notificationManager: NotificationManager): NotificationChannel {
         val name = getString(R.string.notification_title)
         val description = getString(R.string.notification_content)
