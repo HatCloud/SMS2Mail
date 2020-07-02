@@ -73,7 +73,8 @@ object ConfigurationUtil {
     }
 
     private fun readConfiguration(): Configuration {
-        return Configuration(sharePreference.getString(KEY_ACCOUNT_EMAIL, ""),
+        return Configuration(
+                sharePreference.getString(KEY_ACCOUNT_EMAIL, ""),
                 sharePreference.getString(KEY_SMTP_SERVER_HOST, ""),
                 sharePreference.getString(KEY_SMTP_SERVER_PORT, ""),
                 sharePreference.getInt(KEY_SMTP_SECURITY, 0).toSecurityType(),

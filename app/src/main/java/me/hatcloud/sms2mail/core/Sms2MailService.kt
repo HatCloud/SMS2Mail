@@ -41,10 +41,10 @@ class Sms2MailService : Service(), SmsListener{
                 val pendingIntent = PendingIntent.getActivity(this, 0,
                         notificationIntent, 0)
 
-                val channelId: String by lazy {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        createChannel(getSystemService(NOTIFICATION_SERVICE) as NotificationManager).id
-                    } else ""
+                val channelId: String = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    createChannel(getSystemService(NOTIFICATION_SERVICE) as NotificationManager).id
+                } else {
+                    TODO("VERSION.SDK_INT < O")
                 }
 
                 val notification = NotificationCompat.Builder(this, channelId)
@@ -79,7 +79,7 @@ class Sms2MailService : Service(), SmsListener{
         thread.start()
     }
 
-    @TargetApi(26)
+    @TargetApi(27)
     private fun createChannel(notificationManager: NotificationManager): NotificationChannel {
         val name = getString(R.string.notification_title)
         val description = getString(R.string.notification_content)

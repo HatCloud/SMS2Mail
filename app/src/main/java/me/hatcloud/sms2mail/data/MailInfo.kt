@@ -15,16 +15,16 @@ data class MailInfo(private val mailServerHost: String,                     // �
                     val attachFileNames: List<String>? = null) {    // 邮件附件的文件名
 
     constructor(configuration: Configuration, subject: String, content: String)
-            : this(configuration.smtpHost,
-            configuration.smtpPort,
-            configuration.email,
-            configuration.emailToForward,
-            configuration.email,
+            : this(configuration.smtpHost.toString(),
+            configuration.smtpPort.toString(),
+            configuration.email.toString(),
+            configuration.emailToForward.toString(),
+            configuration.email.toString(),
             configuration.password,
             subject,
             content)
 
-    constructor(sms: Sms) : this(ConfigurationUtil.configuration, "Sms from ${sms.address}",
+    constructor(sms: Sms) : this(ConfigurationUtil.configuration, "SMS from ${sms.address}",
             sms.body)
 
     /**

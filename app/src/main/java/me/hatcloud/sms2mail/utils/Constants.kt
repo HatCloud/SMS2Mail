@@ -17,7 +17,7 @@ interface ACTION {
 
 interface NOTIFICATION_ID {
     companion object {
-        const val SMS_2_MAIL = 10106
+        const val SMS_2_MAIL = 12146
     }
 }
 

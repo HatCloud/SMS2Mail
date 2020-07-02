@@ -1,22 +1,20 @@
 package me.hatcloud.sms2mail.utils
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ActivityManager
 import android.content.Context
 import android.content.pm.PackageManager
 import android.database.Cursor
-import android.os.Handler
 import android.support.v4.app.ActivityCompat.requestPermissions
 import android.support.v4.app.ActivityCompat.shouldShowRequestPermissionRationale
 import android.support.v4.content.PermissionChecker.checkSelfPermission
-import android.util.Log
 import me.hatcloud.sms2mail.Sms2MailApp
 import me.hatcloud.sms2mail.core.MailPasswordAuthenticator
 import me.hatcloud.sms2mail.core.Sms2MailService
 import me.hatcloud.sms2mail.core.SmsObserver
 import me.hatcloud.sms2mail.data.MailInfo
 import me.hatcloud.sms2mail.data.Sms
+import android.net.Uri
 import java.util.*
 import javax.mail.Message
 import javax.mail.MessagingException
@@ -42,6 +40,12 @@ fun getAllSmsFromPhone(): List<Sms> {
 fun getSmsContentObserverCursor(): Cursor? {
     return Sms2MailApp.getInstance().contentResolver?.query(SMS_INBOX_URI, SMS_PROJECTION, null, null
             , "date desc")
+}
+fun getSmsContentObserverCursor(uri: Uri?): Cursor? {
+    return uri?.let {
+        Sms2MailApp.getInstance().contentResolver?.query(it, SMS_PROJECTION, null, null
+                , "date desc")
+    }
 }
 
 fun registerSmsObserver(smsObserver : SmsObserver) {
@@ -107,9 +111,9 @@ fun sendMail(mailInfo: MailInfo): Boolean {
     try {
         // 根据session创建一个邮件消息
         val mailMessage = MimeMessage(sendMailSession)
-        mailMessage.addHeader("Content-type", "text/HTML; charset=UTF-8");
-        mailMessage.addHeader("format", "flowed");
-        mailMessage.addHeader("Content-Transfer-Encoding", "8bit");
+        mailMessage.addHeader("Content-type", "text/HTML; charset=UTF-8")
+        mailMessage.addHeader("format", "flowed")
+        mailMessage.addHeader("Content-Transfer-Encoding", "8bit")
         // 创建邮件发送者地址
         val from = InternetAddress(mailInfo.fromAddress)
         // 设置邮件消息的发送者
