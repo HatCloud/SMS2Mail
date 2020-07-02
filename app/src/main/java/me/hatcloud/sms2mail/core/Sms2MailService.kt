@@ -10,15 +10,11 @@ import android.graphics.Color
 import android.os.Build
 import android.os.IBinder
 import android.support.v4.app.NotificationCompat
-import android.util.Log
 import me.hatcloud.sms2mail.R
 import me.hatcloud.sms2mail.data.MailInfo
 import me.hatcloud.sms2mail.data.Sms
 import me.hatcloud.sms2mail.ui.MainActivity
-import me.hatcloud.sms2mail.utils.ACTION
-import me.hatcloud.sms2mail.utils.NOTIFICATION_ID
-import me.hatcloud.sms2mail.utils.SmsListener
-import me.hatcloud.sms2mail.utils.sendMail
+import me.hatcloud.sms2mail.utils.*
 
 
 class Sms2MailService : Service(), SmsListener{
@@ -74,6 +70,7 @@ class Sms2MailService : Service(), SmsListener{
         val thread = object : Thread(){
             override fun run() {
                 sendMail(MailInfo(sms))
+                LogUtil.print("call send mail")
             }
         }
         thread.start()
