@@ -2,7 +2,7 @@
 This is an Android application designed for forward SMS to a specific mailbox via email. 
 ## Notable Features
 - Send SMS to mailbox
-- Support SSL, TLS and STARTTLS protocal
+- Support SSL, TLS (including STARTTLS) protocol
 
 ## Changelog
 ### [Unreleased]
