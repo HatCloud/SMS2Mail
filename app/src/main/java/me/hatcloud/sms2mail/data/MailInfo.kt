@@ -24,17 +24,18 @@ data class MailInfo(private val mailServerHost: String,                     // �
             subject,
             content)
 
-    constructor(sms: Sms) : this(ConfigurationUtil.configuration, "Sms from ${sms.address}",
+    constructor(sms: Sms, configuration: Configuration) : this(configuration, "Sms from ${sms.address}",
             sms.body)
 
     /**
      * 获得邮件会话属性
      */
-    fun getProperties(): Properties {
-        return when (ConfigurationUtil.configuration.securityType) {
+    fun getProperties(): Properties? {
+        return when (ConfigurationUtil.configuration?.securityType) {
             SecurityType.NONE -> getNormalProperties()
             SecurityType.SSL -> getSSLProperties()
             SecurityType.TLS -> getTLSProperties()
+            null -> null
         }
     }
 

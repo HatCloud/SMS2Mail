@@ -1,6 +1,6 @@
 package me.hatcloud.sms2mail.ui.adapter
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 import me.hatcloud.sms2mail.ui.viewholder.BaseViewHolder
 import me.hatcloud.sms2mail.ui.viewholder.ViewHolderManager

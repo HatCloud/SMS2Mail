@@ -9,19 +9,15 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.IBinder
-import android.support.v4.app.NotificationCompat
-import android.util.Log
+import androidx.core.app.NotificationCompat
 import me.hatcloud.sms2mail.R
 import me.hatcloud.sms2mail.data.MailInfo
 import me.hatcloud.sms2mail.data.Sms
 import me.hatcloud.sms2mail.ui.MainActivity
-import me.hatcloud.sms2mail.utils.ACTION
-import me.hatcloud.sms2mail.utils.NOTIFICATION_ID
-import me.hatcloud.sms2mail.utils.SmsListener
-import me.hatcloud.sms2mail.utils.sendMail
+import me.hatcloud.sms2mail.utils.*
 
 
-class Sms2MailService : Service(), SmsListener{
+class Sms2MailService : Service(), SmsListener {
 
     init {
         SmsListenerMgr.register(this)
@@ -71,12 +67,15 @@ class Sms2MailService : Service(), SmsListener{
     override fun onBind(intent: Intent): IBinder? = null
 
     override fun onSmsReceived(sms: Sms) {
-        val thread = object : Thread(){
-            override fun run() {
-                sendMail(MailInfo(sms))
+        val configuration = ConfigurationUtil.configuration
+        if (configuration != null) {
+            val thread = object : Thread() {
+                override fun run() {
+                    sendMail(MailInfo(sms, configuration))
+                }
             }
+            thread.start()
         }
-        thread.start()
     }
 
     @TargetApi(26)

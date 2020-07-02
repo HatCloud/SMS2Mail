@@ -42,14 +42,16 @@ object ConfigurationUtil {
 
     private var innerPasswordKey: String? = null
 
-    var configuration: Configuration
+    var configuration: Configuration?
         get() {
             return innerConfiguration ?: readConfiguration().apply {
                 innerConfiguration = this
             }
         }
         set(value) {
-            writeConfiguration(value)
+            if (value != null) {
+                writeConfiguration(value)
+            }
             innerConfiguration = value
         }
 
@@ -72,13 +74,13 @@ object ConfigurationUtil {
         edit.apply()
     }
 
-    private fun readConfiguration(): Configuration {
-        return Configuration(sharePreference.getString(KEY_ACCOUNT_EMAIL, ""),
-                sharePreference.getString(KEY_SMTP_SERVER_HOST, ""),
-                sharePreference.getString(KEY_SMTP_SERVER_PORT, ""),
+    private fun readConfiguration(): Configuration? {
+        return Configuration(sharePreference.getString(KEY_ACCOUNT_EMAIL, "") ?: return null,
+                sharePreference.getString(KEY_SMTP_SERVER_HOST, "") ?: return null,
+                sharePreference.getString(KEY_SMTP_SERVER_PORT, "") ?: return null,
                 sharePreference.getInt(KEY_SMTP_SECURITY, 0).toSecurityType(),
-                sharePreference.getString(KEY_EMAIL_TO_FORWARD, ""),
-                sharePreference.getString(KEY_ACCOUNT_PASSWORD, "")
+                sharePreference.getString(KEY_EMAIL_TO_FORWARD, "") ?: return null,
+                sharePreference.getString(KEY_ACCOUNT_PASSWORD, "") ?: return null
         )
     }
 }

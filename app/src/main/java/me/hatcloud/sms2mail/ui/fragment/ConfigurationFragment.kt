@@ -2,7 +2,7 @@ package me.hatcloud.sms2mail.ui.fragment
 
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -60,17 +60,20 @@ class ConfigurationFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val configuration: Configuration = ConfigurationUtil.configuration
-        inputEmail.setText(configuration.email)
-        inputPassword.setText(configuration.password)
-        inputSmtpServerHost.setText(configuration.smtpHost)
-        inputSmtpServerPort.setText(configuration.smtpPort)
-        when (configuration.securityType) {
-            SecurityType.NONE -> radioSecurity.check(R.id.radioBtnSecurityNone)
-            SecurityType.SSL -> radioSecurity.check(R.id.radioBtnSecuritySSL)
-            SecurityType.TLS -> radioSecurity.check(R.id.radioBtnSecurityTLS)
+        val configuration: Configuration? = ConfigurationUtil.configuration
+        if (configuration != null) {
+            inputEmail.setText(configuration.email)
+            inputPassword.setText(configuration.password)
+            inputSmtpServerHost.setText(configuration.smtpHost)
+            inputSmtpServerPort.setText(configuration.smtpPort)
+            when (configuration.securityType) {
+                SecurityType.NONE -> radioSecurity.check(R.id.radioBtnSecurityNone)
+                SecurityType.SSL -> radioSecurity.check(R.id.radioBtnSecuritySSL)
+                SecurityType.TLS -> radioSecurity.check(R.id.radioBtnSecurityTLS)
+            }
+            inputEmailToForward.setText(configuration.emailToForward)
         }
-        inputEmailToForward.setText(configuration.emailToForward)
+
         btnEditAndApply.setText(R.string.edit)
         btnEditAndApply.setOnClickListener {
             isEditMode = !isEditMode

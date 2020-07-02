@@ -1,16 +1,13 @@
 package me.hatcloud.sms2mail.utils
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ActivityManager
 import android.content.Context
-import android.content.pm.PackageManager
 import android.database.Cursor
-import android.os.Handler
-import android.support.v4.app.ActivityCompat.requestPermissions
-import android.support.v4.app.ActivityCompat.shouldShowRequestPermissionRationale
-import android.support.v4.content.PermissionChecker.checkSelfPermission
-import android.util.Log
+import androidx.core.app.ActivityCompat.requestPermissions
+import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
+import androidx.core.content.PermissionChecker
+import androidx.core.content.PermissionChecker.checkSelfPermission
 import me.hatcloud.sms2mail.Sms2MailApp
 import me.hatcloud.sms2mail.core.MailPasswordAuthenticator
 import me.hatcloud.sms2mail.core.Sms2MailService
@@ -44,16 +41,16 @@ fun getSmsContentObserverCursor(): Cursor? {
             , "date desc")
 }
 
-fun registerSmsObserver(smsObserver : SmsObserver) {
+fun registerSmsObserver(smsObserver: SmsObserver) {
     Sms2MailApp.getInstance().contentResolver.registerContentObserver(SMS_INBOX_URI, true, smsObserver);
 }
 
-fun unregisterSmsObserver(smsObserver : SmsObserver) {
+fun unregisterSmsObserver(smsObserver: SmsObserver) {
     Sms2MailApp.getInstance().contentResolver.unregisterContentObserver(smsObserver);
 }
 
 fun checkPermission(activity: Activity, permission: String): Boolean =
-        checkSelfPermission(activity, permission) == PackageManager.PERMISSION_GRANTED
+        checkSelfPermission(activity, permission) == PermissionChecker.PERMISSION_GRANTED
 
 fun requestPermission(activity: Activity, permission: String) {
     requestPermissions(activity, arrayOf(permission),
@@ -95,7 +92,7 @@ fun isSms2MailServiceRun(context: Context?): Boolean {
 
 fun sendMail(mailInfo: MailInfo): Boolean {
     LogUtil.d("send mail: $mailInfo")
-    val properties = mailInfo.getProperties()
+    val properties = mailInfo.getProperties() ?: return false
 
     // 根据邮件会话属性和密码验证器构造一个发送邮件的session
     val sendMailSession = if (mailInfo.needValid) {

@@ -2,7 +2,7 @@ package me.hatcloud.sms2mail.utils
 
 import android.app.Activity
 import android.content.Context
-import android.support.annotation.IdRes
+import androidx.annotation.IdRes
 import android.text.format.DateFormat
 import android.view.View
 import android.widget.Toast
