@@ -40,7 +40,7 @@ class Sms2MailService : Service(), SmsListener{
                 val channelId: String = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     createChannel(getSystemService(NOTIFICATION_SERVICE) as NotificationManager).id
                 } else {
-                    TODO("VERSION.SDK_INT < O")
+                    ""
                 }
 
                 val notification = NotificationCompat.Builder(this, channelId)
