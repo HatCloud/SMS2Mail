@@ -3,13 +3,13 @@ package me.hatcloud.sms2mail.ui.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_toggle.*
+import androidx.fragment.app.Fragment
 import me.hatcloud.sms2mail.R
 import me.hatcloud.sms2mail.core.Sms2MailService
+import me.hatcloud.sms2mail.databinding.FragmentToggleBinding
 import me.hatcloud.sms2mail.utils.ACTION
 import me.hatcloud.sms2mail.utils.isSms2MailServiceRun
 
@@ -22,15 +22,20 @@ import me.hatcloud.sms2mail.utils.isSms2MailServiceRun
  */
 class ToggleFragment : Fragment() {
 
+
+    private var _binding: FragmentToggleBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_toggle, container, false)
+        _binding = FragmentToggleBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         updateUI()
-        btnToggle.setOnClickListener {
+        binding.btnToggle.setOnClickListener {
             if (isSms2MailServiceRun(activity)) {
                 val stopIntent = Intent(activity, Sms2MailService::class.java)
                 stopIntent.action = ACTION.STOP_SMS_2_MAIL_SERVICE_ACTION
@@ -56,11 +61,11 @@ class ToggleFragment : Fragment() {
 
     private fun updateUI(isSMS2MailServiceRun: Boolean) {
         if (isSMS2MailServiceRun) {
-            layoutContainer.setBackgroundResource(R.color.primary)
-            btnToggle.setText(R.string.stop)
+            binding.layoutContainer.setBackgroundResource(R.color.primary)
+            binding.btnToggle.setText(R.string.stop)
         } else {
-            layoutContainer.setBackgroundResource(R.color.background)
-            btnToggle.setText(R.string.start)
+            binding.layoutContainer.setBackgroundResource(R.color.background)
+            binding.btnToggle.setText(R.string.start)
         }
     }
 

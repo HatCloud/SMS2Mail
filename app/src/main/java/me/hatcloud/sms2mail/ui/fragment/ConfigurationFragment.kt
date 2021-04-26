@@ -6,25 +6,28 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_configuration.*
 
 import me.hatcloud.sms2mail.R
 import me.hatcloud.sms2mail.data.Configuration
 import me.hatcloud.sms2mail.data.SecurityType
+import me.hatcloud.sms2mail.databinding.FragmentConfigurationBinding
 import me.hatcloud.sms2mail.utils.ConfigurationUtil
 
 class ConfigurationFragment : Fragment() {
 
+    private var _binding: FragmentConfigurationBinding? = null
+    private val binding get() = _binding!!
+
     private val allEditableView by lazy {
-        arrayOf(inputEmail,
-                inputPassword,
-                inputSmtpServerHost,
-                inputSmtpServerPort,
-                radioSecurity,
-                radioBtnSecurityNone,
-                radioBtnSecuritySSL,
-                radioBtnSecurityTLS,
-                inputEmailToForward)
+        arrayOf(binding.inputEmail,
+                binding.inputPassword,
+                binding.inputSmtpServerHost,
+                binding.inputSmtpServerPort,
+                binding.radioSecurity,
+                binding.radioBtnSecurityNone,
+                binding.radioBtnSecuritySSL,
+                binding.radioBtnSecurityTLS,
+                binding.inputEmailToForward)
     }
 
     private var isEditMode = false
@@ -35,20 +38,20 @@ class ConfigurationFragment : Fragment() {
             allEditableView.forEach {
                 it.isEnabled = value
             }
-            btnEditAndApply.setText(if (value) R.string.apply else R.string.edit)
+            binding.btnEditAndApply.setText(if (value) R.string.apply else R.string.edit)
             if (!value) {
-                ConfigurationUtil.configuration = Configuration(inputEmail.text.toString(),
-                        inputSmtpServerHost.text.toString(),
-                        inputSmtpServerPort.text.toString(),
-                        when (radioSecurity.checkedRadioButtonId) {
+                ConfigurationUtil.configuration = Configuration(binding.inputEmail.text.toString(),
+                        binding.inputSmtpServerHost.text.toString(),
+                        binding.inputSmtpServerPort.text.toString(),
+                        when (binding.radioSecurity.checkedRadioButtonId) {
                             R.id.radioBtnSecurityNone -> SecurityType.NONE
                             R.id.radioBtnSecuritySSL -> SecurityType.SSL
                             R.id.radioBtnSecurityTLS -> SecurityType.TLS
                             else -> SecurityType.NONE
                         },
-                        inputEmailToForward.text.toString())
+                        binding.inputEmailToForward.text.toString())
                         .apply {
-                            password = inputPassword.text.toString()
+                            password = binding.inputPassword.text.toString()
                         }
             }
             field = value
@@ -56,26 +59,28 @@ class ConfigurationFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_configuration, container, false)
+       _binding = FragmentConfigurationBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val configuration: Configuration? = ConfigurationUtil.configuration
         if (configuration != null) {
-            inputEmail.setText(configuration.email)
-            inputPassword.setText(configuration.password)
-            inputSmtpServerHost.setText(configuration.smtpHost)
-            inputSmtpServerPort.setText(configuration.smtpPort)
+            binding.inputEmail.setText(configuration.email)
+            binding.inputPassword.setText(configuration.password)
+            binding.inputSmtpServerHost.setText(configuration.smtpHost)
+            binding.inputSmtpServerPort.setText(configuration.smtpPort)
             when (configuration.securityType) {
-                SecurityType.NONE -> radioSecurity.check(R.id.radioBtnSecurityNone)
-                SecurityType.SSL -> radioSecurity.check(R.id.radioBtnSecuritySSL)
-                SecurityType.TLS -> radioSecurity.check(R.id.radioBtnSecurityTLS)
+                SecurityType.NONE -> binding.radioSecurity.check(R.id.radioBtnSecurityNone)
+                SecurityType.SSL -> binding.radioSecurity.check(R.id.radioBtnSecuritySSL)
+                SecurityType.TLS -> binding.radioSecurity.check(R.id.radioBtnSecurityTLS)
             }
-            inputEmailToForward.setText(configuration.emailToForward)
+            binding.inputEmailToForward.setText(configuration.emailToForward)
         }
 
-        btnEditAndApply.setText(R.string.edit)
-        btnEditAndApply.setOnClickListener {
+        binding.btnEditAndApply.setText(R.string.edit)
+        binding.btnEditAndApply.setOnClickListener {
             isEditMode = !isEditMode
         }
         allEditableView.forEach {

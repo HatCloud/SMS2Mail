@@ -4,8 +4,8 @@ import android.Manifest
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
 import me.hatcloud.sms2mail.R
+import me.hatcloud.sms2mail.databinding.ActivityMainBinding
 import me.hatcloud.sms2mail.ui.fragment.ConfigurationFragment
 import me.hatcloud.sms2mail.ui.fragment.SmsFragment
 import me.hatcloud.sms2mail.ui.fragment.ToggleFragment
@@ -30,6 +30,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
         false
+    }
+
+    private val navigation by lazy{
+        findViewById<BottomNavigationView>(R.id.navigation)
     }
 
     private val fragments = listOf(ToggleFragment.newInstance(),
