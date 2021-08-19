@@ -74,7 +74,7 @@ fun addPermission(activity: Activity, permissionsList: MutableList<String>, perm
     return true
 }
 
-fun isSms2MailServiceRun(context: Context?): Boolean {
+fun isSms2MailServiceRun(context: Context? = Sms2MailApp.getInstance()): Boolean {
     if (context == null) {
         return false
     }
