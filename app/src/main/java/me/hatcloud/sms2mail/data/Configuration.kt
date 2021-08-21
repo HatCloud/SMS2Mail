@@ -23,8 +23,8 @@ data class Configuration(var email: String?,
         }
 }
 
-enum class SecurityType(val value: Int) {
-    NONE(0), SSL(1), TLS(2)
+enum class SecurityType(val value: Int, name: String) {
+    NONE(0, "None"), SSL(1, "SSL"), TLS(2, "SSL")
 }
 
 fun Int.toSecurityType(): SecurityType {

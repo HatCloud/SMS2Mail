@@ -2,10 +2,11 @@ package me.hatcloud.sms2mail.utils
 
 import android.app.Activity
 import android.content.Context
-import android.support.annotation.IdRes
+import androidx.annotation.IdRes
 import android.text.format.DateFormat
 import android.view.View
 import android.widget.Toast
+import me.hatcloud.sms2mail.Sms2MailApp
 import java.util.*
 
 inline fun <T> Boolean.yes(action: () -> T): Boolean {
@@ -27,7 +28,7 @@ fun Int.dp2px(context: Context?): Int {
     return (this * (scale ?: 2) + 0.5f).toInt()
 }
 
-fun Long.formatDate(context: Context): String {
+fun Long.formatDate(context: Context = Sms2MailApp.getInstance()): String {
     val date = Date(this)
     val dateFormat = DateFormat.getDateFormat(context)
     return dateFormat.format(date)

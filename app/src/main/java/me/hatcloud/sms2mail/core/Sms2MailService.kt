@@ -9,7 +9,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.IBinder
-import android.support.v4.app.NotificationCompat
+import androidx.core.app.NotificationCompat
 import me.hatcloud.sms2mail.R
 import me.hatcloud.sms2mail.data.MailInfo
 import me.hatcloud.sms2mail.data.Sms
@@ -40,7 +40,7 @@ class Sms2MailService : Service(), SmsListener{
                 val channelId: String = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     createChannel(getSystemService(NOTIFICATION_SERVICE) as NotificationManager).id
                 } else {
-                    TODO("VERSION.SDK_INT < O")
+                    ""
                 }
 
                 val notification = NotificationCompat.Builder(this, channelId)
