@@ -23,7 +23,7 @@ data class Configuration(var email: String?,
         }
 }
 
-enum class SecurityType(val value: Int, name: String) {
+enum class SecurityType(val value: Int, val desc: String) {
     NONE(0, "None"), SSL(1, "SSL"), TLS(2, "SSL")
 }
 

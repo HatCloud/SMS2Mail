@@ -117,17 +117,17 @@ fun ConfigurationPage() {
 
         Button(
             onClick = {
-                isEditMode = !isEditMode
                 if (isEditMode) {
                     ConfigurationUtil.configuration = configuration.apply {
                         this.email = email
                         this.password = password
-                        this.smtpHost = email
+                        this.smtpHost = smtpHost
                         this.smtpPort = smtpPort
                         this.securityType = securityType
                         this.emailToForward = emailToForward
                     }
                 }
+                isEditMode = !isEditMode
             },
             modifier = Modifier
                 .padding(vertical = 16.dp)
@@ -216,7 +216,7 @@ fun ConfigurationSecuritySelector(
                     onSelect(securityType)
                 }
             )
-            Text(text = securityType.name)
+            Text(text = securityType.desc)
             Spacer(modifier = Modifier.width(4.dp))
         }
     }

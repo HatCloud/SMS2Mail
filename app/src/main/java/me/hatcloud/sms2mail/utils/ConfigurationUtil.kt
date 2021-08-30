@@ -69,7 +69,7 @@ object ConfigurationUtil {
         edit.putString(KEY_SMTP_SERVER_PORT, configuration.smtpPort)
         edit.putInt(KEY_SMTP_SECURITY, configuration.securityType.value)
         edit.putString(KEY_EMAIL_TO_FORWARD, configuration.emailToForward)
-        edit.apply()
+        edit.commit()
     }
 
     private fun readConfiguration(): Configuration {
