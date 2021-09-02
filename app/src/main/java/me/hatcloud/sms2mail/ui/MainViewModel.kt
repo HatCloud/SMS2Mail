@@ -13,11 +13,12 @@ import me.hatcloud.sms2mail.core.Sms2MailService
 import me.hatcloud.sms2mail.data.Sms
 import me.hatcloud.sms2mail.utils.ACTION
 import me.hatcloud.sms2mail.utils.getAllSmsFromPhone
+import me.hatcloud.sms2mail.utils.isSms2MailServiceRun
 
 class MainViewModel : ViewModel() {
 
     val running: MutableLiveData<Boolean> by lazy {
-        MutableLiveData<Boolean>()
+        MutableLiveData<Boolean>(isSms2MailServiceRun())
     }
 
     val isRefreshing: MutableLiveData<Boolean> by lazy {
